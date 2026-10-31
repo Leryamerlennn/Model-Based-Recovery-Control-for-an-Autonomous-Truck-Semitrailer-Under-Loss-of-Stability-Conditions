@@ -1,4 +1,5 @@
-# Model-Based Recovery Control for a Truck–Semitrailer
+# Model-Based-Recovery-Control-for-an-Autonomous-Truck-Semitrailer-Under-Loss-of-Stability-Conditions
+
 
 Проект посвящён моделированию динамики автономного грузовика с полуприцепом и
 восстановлению устойчивости с помощью MPPI-контроллера после возникновения
