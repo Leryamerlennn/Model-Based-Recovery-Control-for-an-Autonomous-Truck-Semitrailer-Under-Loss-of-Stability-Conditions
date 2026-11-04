@@ -17,8 +17,6 @@ next_state = model.step(state, control, dt);
 
 `[steering_rate, longitudinal_acceleration]`.
 
-Вторая компонента нужна, потому что силы в отчёте зависят от `a_cmd`. Если
-скоростью управляет внешний PI-регулятор, его выход передаётся именно сюда.
 
 ## Основные файлы
 
