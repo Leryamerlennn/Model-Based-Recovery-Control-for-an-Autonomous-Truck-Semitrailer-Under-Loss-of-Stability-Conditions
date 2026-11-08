@@ -19,7 +19,6 @@
     ├── simulation/               # симулятор и программы валидации
     ├── experements/              # экспериментальные отчёты
     │   └── csv/                  # траектории и сводные результаты
-    ├── visualization/            # ноутбуки визуализации
     ├── tests/                    # автоматические и графические тесты
     └── tools/                    # генераторы отчётных ноутбуков
 ```
@@ -33,10 +32,6 @@
   полуприцепом.
 - `truck_model_cpp/include/controller/mppi_controller.hpp` и
   `truck_model_cpp/src/mppi_controller.cpp` — MPPI-контроллер.
-- `truck_model_cpp/visualization/draw.ipynb` — визуализация траектории,
-  складывания, бокового скольжения, yaw rate и управляющих воздействий.
-- `truck_model_cpp/visualization/compare_dynamic.ipynb` — сравнение движения с
-  MPPI и без управления.
 - `truck_model_cpp/tests/` — автоматические тесты и графическая проверка модели.
 
 ### Эксперименты
@@ -61,11 +56,9 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure
 mkdir -p experements/csv
-./build/simulate_truck > experements/csv/trajectory.csv
 ./build/validate_scenarios experements/csv
 ./build/validate_mppi experements/csv
 ```
 
 После запуска результаты из `truck_model_cpp/experements/csv/` можно открыть и
-проанализировать в ноутбуках из `truck_model_cpp/experements/` и
-`truck_model_cpp/visualization/`.
+проанализировать в ноутбуках из `truck_model_cpp/experements/`.

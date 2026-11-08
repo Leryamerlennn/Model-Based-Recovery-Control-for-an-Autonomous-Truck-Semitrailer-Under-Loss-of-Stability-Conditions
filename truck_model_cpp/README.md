@@ -29,7 +29,6 @@ truck_model_cpp/
 ├── simulation/               # симулятор и программы экспериментальной проверки
 ├── experements/              # ноутбуки с отчётами и результаты экспериментов
 │   └── csv/                  # CSV-траектории и сводные численные результаты
-├── visualization/            # ноутбуки для отрисовки и сравнения траекторий
 ├── tests/                    # автоматические и графические тесты
 ├── tools/                    # генераторы отчётных Jupyter-ноутбуков
 ├── CMakeLists.txt            # конфигурация сборки
@@ -67,9 +66,6 @@ truck_model_cpp/
   динамической модели грузовика с полуприцепом. Вычисляет силы на осях, углы
   увода, ускорения и новое состояние системы с помощью интеграторов Euler или
   RK4.
-- `visualization/draw.ipynb` — визуализация и проверка работы контроллера по данным из
-  `experements/csv/trajectory.csv`: траектория, курсовые углы, угол складывания, боковое
-  скольжение, yaw rate, управляющие воздействия и метрики восстановления.
 - `tests/truck_model_tests.cpp` — автоматические тесты модели: проверка
   ограничений управления, интегрирования, численной корректности и согласованности
   `rollout()` с последовательными вызовами `step()`.
@@ -79,10 +75,6 @@ truck_model_cpp/
   нулевого управления, простого стабилизатора и двух вариантов MPPI.
 - `experements/mppi_experimental_validation.ipynb` — карта областей
   успешного восстановления и количественное сравнение алгоритмов.
-- `experements/csv/trajectory.csv` — результат запуска `simulate_truck`, используемый в
-  `visualization/draw.ipynb`.
-- `visualization/compare_dynamic.ipynb` — сравнение траекторий с MPPI и без
-  управления.
 
 ## Сборка и запуск
 
@@ -91,7 +83,6 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure
 mkdir -p experements/csv
-./build/simulate_truck > experements/csv/trajectory.csv
 ./build/validate_mppi experements/csv
 ```
 
