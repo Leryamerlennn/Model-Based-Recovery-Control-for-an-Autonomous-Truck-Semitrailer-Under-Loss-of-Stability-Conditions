@@ -7,27 +7,48 @@
 
 ## Структура проекта
 
-- `dmpc_model_report.ipynb` — описание и вывод математической модели.
-- `dmpc_pipline.ipynb` — исследовательский notebook с этапами разработки модели
-  и алгоритма управления.
-- `truck_model_cpp/examples/simulate.cpp` — симуляция замкнутой системы. Задаёт
-  начальное возмущение, вызывает контроллер, обновляет состояние модели и
-  сохраняет результаты движения.
-- `truck_model_cpp/src/mppi_controller.cpp` — реализация MPPI-контроллера.
-  Контроллер прогнозирует множество вариантов управления и выбирает воздействие,
-  уменьшающее потерю устойчивости.
-- `truck_model_cpp/src/truck_model.cpp` — динамическая модель грузовика с
-  полуприцепом. Содержит расчёт сил на осях, углов увода, ускорений и
-  интегрирование состояния.
-- `truck_model_cpp/draw.ipynb` — визуализация результатов и оценка качества
-  контроллера: траектория, угол складывания, боковое скольжение, yaw rate,
-  управление и метрики восстановления.
-- `truck_model_cpp/tests/truck_model_tests.cpp` — автоматическая проверка модели,
-  её ограничений и численных методов.
-- `truck_model_cpp/tests/test_truck_model_result.ipynb` — графическая проверка
-  физического поведения модели грузовика.
-- `truck_model_cpp/trajectory.csv` — результат симуляции для анализа в
-  `draw.ipynb`.
+```text
+.
+├── dmpc_model_report.ipynb       # описание и вывод математической модели
+├── dmpc_pipline.ipynb            # исследовательский notebook
+└── truck_model_cpp/
+    ├── include/
+    │   ├── truck_model/          # публичный интерфейс динамической модели
+    │   └── controller/           # публичный интерфейс MPPI-контроллера
+    ├── src/                      # реализации модели и контроллера
+    ├── simulation/               # симулятор и программы валидации
+    ├── experements/              # экспериментальные отчёты
+    │   └── csv/                  # траектории и сводные результаты
+    ├── visualization/            # ноутбуки визуализации
+    ├── tests/                    # автоматические и графические тесты
+    └── tools/                    # генераторы отчётных ноутбуков
+```
+
+Основные компоненты:
+
+- `truck_model_cpp/simulation/simulate.cpp` — замкнутая симуляция модели с
+  MPPI-контроллером.
+- `truck_model_cpp/include/truck_model/truck_model.hpp` и
+  `truck_model_cpp/src/truck_model.cpp` — динамическая модель грузовика с
+  полуприцепом.
+- `truck_model_cpp/include/controller/mppi_controller.hpp` и
+  `truck_model_cpp/src/mppi_controller.cpp` — MPPI-контроллер.
+- `truck_model_cpp/visualization/draw.ipynb` — визуализация траектории,
+  складывания, бокового скольжения, yaw rate и управляющих воздействий.
+- `truck_model_cpp/visualization/compare_dynamic.ipynb` — сравнение движения с
+  MPPI и без управления.
+- `truck_model_cpp/tests/` — автоматические тесты и графическая проверка модели.
+
+### Эксперименты
+
+- `truck_model_cpp/experements/truck_model_validation_report.ipynb` — проверка
+  прямолинейного движения, постоянного руления, торможения и начального бокового
+  скольжения.
+- `truck_model_cpp/experements/mppi_experimental_validation.ipynb` — сравнение
+  нулевого управления, стабилизирующего регулятора и двух вариантов MPPI при
+  разных скоростях, коэффициентах сцепления и неопределённостях.
+- `truck_model_cpp/experements/csv/` — CSV-файлы всех сценариев, сводные метрики
+  и репрезентативные траектории.
 
 Подробное описание модели, интерфейсов и ограничений находится в
 [`truck_model_cpp/README.md`](truck_model_cpp/README.md).
@@ -39,8 +60,12 @@ cd truck_model_cpp
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ctest --test-dir build --output-on-failure
-./build/simulate_truck > trajectory.csv
+mkdir -p experements/csv
+./build/simulate_truck > experements/csv/trajectory.csv
+./build/validate_scenarios experements/csv
+./build/validate_mppi experements/csv
 ```
 
-После запуска файл `trajectory.csv` можно открыть и проанализировать в
-`truck_model_cpp/draw.ipynb`.
+После запуска результаты из `truck_model_cpp/experements/csv/` можно открыть и
+проанализировать в ноутбуках из `truck_model_cpp/experements/` и
+`truck_model_cpp/visualization/`.
