@@ -22,8 +22,14 @@ target_compile_options(truck_model PRIVATE
 )
 
 if(TRUCK_MODEL_BUILD_EXAMPLES)
-    add_executable(simulate_truck examples/simulate.cpp)
+    add_executable(simulate_truck simulation/simulate.cpp)
     target_link_libraries(simulate_truck PRIVATE truck_model::truck_model)
+
+    add_executable(validate_scenarios simulation/validate_scenarios.cpp)
+    target_link_libraries(validate_scenarios PRIVATE truck_model::truck_model)
+
+    add_executable(validate_mppi simulation/validate_mppi.cpp)
+    target_link_libraries(validate_mppi PRIVATE truck_model::truck_model)
 endif()
 
 if(TRUCK_MODEL_BUILD_TESTS)

@@ -1,5 +1,5 @@
 #include "truck_model/truck_model.hpp"
-#include "truck_model/mppi_controller.hpp"
+#include "controller/mppi_controller.hpp"
 
 #include <iomanip>
 #include <iostream>
@@ -42,6 +42,7 @@ int main() {
     trajectory[0] = initial;
     for (std::size_t i = 0; i < steps; ++i) {
         controls[i] = controller.compute(trajectory[i]);
+        // controls[i] = truck_model::Control{0.0, 0.0};
         trajectory[i + 1] = model.step(trajectory[i], controls[i], dt);
     }
 

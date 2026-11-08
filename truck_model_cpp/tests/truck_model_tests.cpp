@@ -1,5 +1,5 @@
 #include "truck_model/truck_model.hpp"
-#include "truck_model/mppi_controller.hpp"
+#include "controller/mppi_controller.hpp"
 
 #include <cmath>
 #include <cstdlib>

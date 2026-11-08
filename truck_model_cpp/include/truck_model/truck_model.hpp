@@ -51,7 +51,7 @@ struct Parameters {
     double rear_cornering_stiffness{500000.0};
     double trailer_cornering_stiffness{1650000.0};
 
-    double friction_coefficient{0.7};
+    double friction_coefficient{0.4};
     double gravity{9.81};
 
     // Actuator/numerical limits.

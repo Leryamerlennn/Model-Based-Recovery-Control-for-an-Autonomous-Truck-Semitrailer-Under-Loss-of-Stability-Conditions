@@ -1,4 +1,4 @@
-#include "truck_model/mppi_controller.hpp"
+#include "controller/mppi_controller.hpp"
 
 #include <algorithm>
 #include <cmath>
